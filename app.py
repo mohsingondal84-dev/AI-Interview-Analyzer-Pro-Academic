@@ -502,32 +502,61 @@ st.warning(
 
 with st.sidebar:
     st.header("Candidate and Rubric")
+
     candidate_name = st.text_input(
-    label="Candidate name",
-    value="Mohsin Gondal and Muhammad Ali Imran",
-    key="candidate_name"
-)
-candidate_name = f"{student_1} and {student_2}"
-    role = st.text_input("Practice role", "AI / Data Science Position")
+        label="Candidate name",
+        value="Mohsin Gondal and Muhammad Ali Imran",
+        key="candidate_name",
+    )
+
+    role = st.text_input(
+        label="Practice role",
+        value="AI / Data Science Position",
+        key="practice_role",
+    )
+
     question = st.text_area(
-        "Interview question",
-        "Tell me about yourself and explain why you are suitable for this role.",
+        label="Interview question",
+        value=(
+            "Tell me about yourself and explain why you are "
+            "suitable for this role."
+        ),
         height=90,
+        key="interview_question",
     )
+
     keyword_text = st.text_input(
-        "Expected keywords",
-        "python, machine learning, deep learning, communication, project",
+        label="Expected keywords",
+        value=(
+            "python, machine learning, deep learning, "
+            "communication, project"
+        ),
+        key="expected_keywords",
     )
-    whisper_model = st.selectbox("Transcription model", ["tiny", "base"], index=0)
+
+    whisper_model_size = st.selectbox(
+        label="Transcription model",
+        options=["tiny", "base"],
+        index=0,
+        key="transcription_model",
+    )
 
     st.header("Practice-Score Weights")
-    weights = {
-        "emotion": st.slider("Composure pattern", 0, 100, 20),
-        "gaze": st.slider("Camera-facing attention", 0, 100, 20),
-        "voice": st.slider("Voice delivery", 0, 100, 30),
-        "clarity": st.slider("Transcript clarity", 0, 100, 30),
-    }
 
+    weights = {
+        "composure": st.slider(
+            "Composure pattern", 0, 100, 20
+        ),
+        "gaze": st.slider(
+            "Camera-facing attention", 0, 100, 20
+        ),
+        "delivery": st.slider(
+            "Voice delivery", 0, 100, 30
+        ),
+        "clarity": st.slider(
+            "Transcript clarity", 0, 100, 30
+        ),
+    }
 uploaded_video = st.file_uploader(
     "Upload a recorded interview video",
     type=["mp4", "mov", "avi", "mkv"],
