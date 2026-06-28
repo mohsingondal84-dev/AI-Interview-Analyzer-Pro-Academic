@@ -396,12 +396,18 @@ def clarity_score(text_result: TextResult, has_keywords: bool) -> float:
     return round(max(0.0, min(100.0, score)), 2)
 
 
-def overall_score(emotion: float, gaze: float, voice: float, clarity: float, weights: dict[str, int]) -> float:
+def overall_score(
+    emotion: float,
+    gaze: float,
+    voice: float,
+    clarity: float,
+    weights: dict[str, int],
+) -> float:
     total = sum(weights.values()) or 1
     value = (
-        emotion * weights["emotion"]
+        emotion * weights["composure"]
         + gaze * weights["gaze"]
-        + voice * weights["voice"]
+        + voice * weights["delivery"]
         + clarity * weights["clarity"]
     ) / total
     return round(max(0.0, min(100.0, value)), 2)
@@ -557,6 +563,7 @@ with st.sidebar:
             "Transcript clarity", 0, 100, 30
         ),
     }
+
 uploaded_video = st.file_uploader(
     "Upload a recorded interview video",
     type=["mp4", "mov", "avi", "mkv"],
@@ -575,7 +582,7 @@ if uploaded_video is not None:
             audio_path = extract_audio(video_path)
 
             progress.progress(25, text="Transcribing speech...")
-            transcript_result = transcribe_audio(audio_path, whisper_model)
+            transcript_result = transcribe_audio(audio_path, whisper_model_size)
 
             keywords = [item.strip() for item in keyword_text.split(",") if item.strip()]
 
