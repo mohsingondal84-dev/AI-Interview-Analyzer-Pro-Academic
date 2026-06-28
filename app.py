@@ -502,7 +502,17 @@ st.warning(
 
 with st.sidebar:
     st.header("Candidate and Rubric")
-    candidate_name = st.text_input("Candidate name", "Mohsin Gondal","Muhammad Ali Imran")
+    student_1 = st.text_input(
+    "Student 1",
+    "Mohsin Gondal"
+)
+
+student_2 = st.text_input(
+    "Student 2",
+    "Muhammad Ali Imran"
+)
+
+candidate_name = f"{student_1} and {student_2}"
     role = st.text_input("Practice role", "AI / Data Science Position")
     question = st.text_area(
         "Interview question",
